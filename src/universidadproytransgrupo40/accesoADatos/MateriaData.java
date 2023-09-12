@@ -1,37 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package universidadproytransgrupo40.accesoADatos;
+
+package AccesoADatos;
 
 import java.sql.Connection;
-import java.sql.Date;
+import Entidades.Materia;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-import universidadproytransgrupo40.entidades.Alumno;
-import universidadproytransgrupo40.entidades.Materia;
 
-/**
- *
- * @author eduardo
- */
 public class MateriaData {
     
-    private Connection conexion;
+    Connection conexion = null;
     
-    
-    public MateriaData(){
-         conexion=(Connection) Conexion.getConexion();
+    public MateriaData() {
+        conexion = Conexion.getConexion();
     }
-        
-  public void guardarMateria(Materia materia) {
-        String sql = "insert into materia (nombre, aÃ±o, estado) values (?,?,?)";
+    
+    public void guardarMateria(Materia materia) {
+        String sql = "insert into materia (nombre, año, estado) values (?,?,?)";
         try {
             PreparedStatement ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, materia.getNombre());
@@ -41,7 +32,7 @@ public class MateriaData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 materia.setIdMateria(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Materia aÃ±adida exitosamente.");
+                JOptionPane.showMessageDialog(null, "Materia añadida exitosamente.");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -63,7 +54,7 @@ public class MateriaData {
     }
     
     public void modificarMateria(Materia materia) {
-        String sql = "update materia set nombre = ?, aÃ±o = ?, estado = 1 where idMateria = ?";
+        String sql = "update materia set nombre = ?, año = ?, estado = 1 where idMateria = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setString(1, materia.getNombre());
@@ -78,5 +69,47 @@ public class MateriaData {
         }
     }
     
+    public Materia buscarMateria(int idMateria) {
+        String sql = "select nombre, año from materia where idMateria = ? and estado = 1";
+        Materia materia = null;
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idMateria);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                materia = new Materia();
+                materia.setIdMateria(idMateria);
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnioMateria(rs.getInt("año"));
+                materia.setActivo(true);
+            } else JOptionPane.showMessageDialog(null, "Materia NO encontrada.");
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar la materia. "+ ex);
+        }
+        return materia;
+    }
+    
+    public List<Materia> listarMateria() {
+        String sql = "select idMateria, nombre, año from materia where estado = 1";
+        ArrayList<Materia> materias = new ArrayList<>();
+        PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnioMateria(rs.getInt("año"));
+                materia.setActivo(true);
+                materias.add(materia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar listar las materias."+ ex);
+        }
+        return materias;
+    }
+    
 }
-
