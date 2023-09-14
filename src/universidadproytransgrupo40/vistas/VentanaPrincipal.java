@@ -37,7 +37,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jmGestionInsc = new javax.swing.JMenuItem();
         jmNotas = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jmconsulta = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
@@ -93,9 +93,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Consultas");
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
 
-        jMenuItem5.setText("Alumnos por Materia");
-        jMenu5.add(jMenuItem5);
+        jmconsulta.setText("Alumnos por Materia");
+        jmconsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmconsultaActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmconsulta);
 
         jMenuBar1.add(jMenu5);
 
@@ -139,6 +149,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         escritorio.add(notas);
         escritorio.moveToFront(notas);
     }//GEN-LAST:event_jmNotasActionPerformed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+
+    }//GEN-LAST:event_jMenu5ActionPerformed
+
+    private void jmconsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmconsultaActionPerformed
+                    escritorio.removeAll();
+        escritorio.repaint();
+        ConsultaAlumnosXMateria consulta= new ConsultaAlumnosXMateria();
+        consulta.setVisible(true);
+        escritorio.add(consulta);
+        escritorio.moveToFront(consulta);
+    }//GEN-LAST:event_jmconsultaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,9 +208,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jmGestionInsc;
     private javax.swing.JMenuItem jmNotas;
+    private javax.swing.JMenuItem jmconsulta;
     // End of variables declaration//GEN-END:variables
 }

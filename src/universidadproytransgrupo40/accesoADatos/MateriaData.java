@@ -1,8 +1,9 @@
 
-package AccesoADatos;
+package universidadproytransgrupo40.accesoADatos;
 
 import java.sql.Connection;
-import Entidades.Materia;
+import universidadproytransgrupo40.entidades.Materia;
+        
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;

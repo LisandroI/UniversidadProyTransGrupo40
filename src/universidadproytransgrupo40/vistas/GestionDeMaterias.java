@@ -1,8 +1,11 @@
+package universidadproytransgrupo40.vistas;
 
-package Vistas;
-import Entidades.Materia;
-import AccesoADatos.MateriaData;
+
+import universidadproytransgrupo40.entidades.Materia;
+import universidadproytransgrupo40.accesoADatos.MateriaData;
 import javax.swing.JOptionPane;
+
+
 
 public class GestionDeMaterias extends javax.swing.JInternalFrame {
 
