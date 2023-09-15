@@ -25,6 +25,7 @@ public class Alumno {
         this.fechaNac = fechaNac;
         this.activo = activo;
     }
+    
 
     public Alumno(int idAlumno, int dni, String apellido, String nombre, LocalDate fechaNac, boolean activo) {
         this.idAlumno = idAlumno;
