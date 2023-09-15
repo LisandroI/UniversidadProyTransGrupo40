@@ -113,4 +113,24 @@ public class MateriaData {
         return materias;
     }
     
+    public Materia datosMateria(int idMateria){
+        Materia materia = null;
+        String sql = "SELECT  nombre, año, estado FROM materia WHERE idMateria=1";
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                materia = new Materia();
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnioMateria(rs.getInt("año"));
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Materia " + ex.getMessage());
+        }
+        return materia;
+        
+    }
+    
 }

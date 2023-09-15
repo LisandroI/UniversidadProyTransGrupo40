@@ -30,9 +30,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jmAlumnos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jmMateria = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jmGestionInsc = new javax.swing.JMenuItem();
         jmNotas = new javax.swing.JMenuItem();
@@ -60,15 +60,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Alumno");
 
-        jMenuItem1.setText("Formulario de Alumno");
-        jMenu2.add(jMenuItem1);
+        jmAlumnos.setText("Formulario de Alumno");
+        jmAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAlumnosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmAlumnos);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Materia");
 
-        jMenuItem2.setText("Formulario de Materia");
-        jMenu3.add(jMenuItem2);
+        jmMateria.setText("Formulario de Materia");
+        jmMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmMateriaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmMateria);
 
         jMenuBar1.add(jMenu3);
 
@@ -163,6 +173,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         escritorio.moveToFront(consulta);
     }//GEN-LAST:event_jmconsultaActionPerformed
 
+    private void jmAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAlumnosActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        Alumnos alu= new Alumnos();
+        alu.setVisible(true);
+        escritorio.add(alu);
+        escritorio.moveToFront(alu);
+    }//GEN-LAST:event_jmAlumnosActionPerformed
+
+    private void jmMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmMateriaActionPerformed
+         escritorio.removeAll();
+        escritorio.repaint();
+        GestionDeMaterias gdm= new GestionDeMaterias();
+        gdm.setVisible(true);
+        escritorio.add(gdm);
+        escritorio.moveToFront(gdm);
+    }//GEN-LAST:event_jmMateriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,10 +234,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jmAlumnos;
     private javax.swing.JMenuItem jmGestionInsc;
+    private javax.swing.JMenuItem jmMateria;
     private javax.swing.JMenuItem jmNotas;
     private javax.swing.JMenuItem jmconsulta;
     // End of variables declaration//GEN-END:variables
