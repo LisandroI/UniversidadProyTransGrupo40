@@ -165,7 +165,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu5ActionPerformed
 
     private void jmconsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmconsultaActionPerformed
-                    escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
         ConsultaAlumnosXMateria consulta= new ConsultaAlumnosXMateria();
         consulta.setVisible(true);

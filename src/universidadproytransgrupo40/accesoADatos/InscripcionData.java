@@ -271,13 +271,13 @@ try{
          
          
     }
-    public List<Alumno> obtenerAlumnosXMateria(int idMAteria){
+    public ArrayList<Alumno> obtenerAlumnosXMateria(int idMateria){
         
         ArrayList<Alumno> alumnos = new ArrayList<>();
         try {
-            String sql = "SELECT alumno.idAlumno,dni,apellido,nombre FROM alumno join inscripcion on (inscripcion.idAlumno = alumno.idAlumno) WHERE idMateria=?";
+            String sql = "SELECT alumno.idAlumno,dni,apellido,nombre FROM alumno join inscripcion on (inscripcion.idAlumno = alumno.idAlumno) WHERE idMateria = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idMAteria);
+            ps.setInt(1, idMateria);
             ResultSet rs = ps.executeQuery();
 //            System.out.println(rs.next());
 //            Alumno alumno;

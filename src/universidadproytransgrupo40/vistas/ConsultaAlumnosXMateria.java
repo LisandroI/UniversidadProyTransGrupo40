@@ -3,6 +3,9 @@ package universidadproytransgrupo40.vistas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import universidadproytransgrupo40.accesoADatos.InscripcionData;
 import universidadproytransgrupo40.accesoADatos.MateriaData;
 import universidadproytransgrupo40.entidades.Alumno;
@@ -13,14 +16,20 @@ import universidadproytransgrupo40.entidades.Materia;
  * @author Asus
  */
 public class ConsultaAlumnosXMateria extends javax.swing.JInternalFrame {
-
+private DefaultTableModel modelo = new DefaultTableModel(){
+    public boolean isCellEditable(int f, int c){
+            return false;
+        }
+};
     /**
      * Creates new form ConsultaVista
      */
  ConsultaAlumnosXMateria() {
         initComponents();
         cargarComboBox();
+        armarCabecera();
     }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +45,7 @@ public class ConsultaAlumnosXMateria extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jcbMateria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtAlumnos = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
 
@@ -54,7 +63,7 @@ public class ConsultaAlumnosXMateria extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -73,10 +82,10 @@ public class ConsultaAlumnosXMateria extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane1.setViewportView(jtAlumnos);
+        if (jtAlumnos.getColumnModel().getColumnCount() > 0) {
+            jtAlumnos.getColumnModel().getColumn(0).setResizable(false);
+            jtAlumnos.getColumnModel().getColumn(1).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -130,36 +139,79 @@ public class ConsultaAlumnosXMateria extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+//     private void armarCabecera(){
+//    modelo.addColumn("Codigo");
+//    modelo.addColumn("Descripcion");
+//    modelo.addColumn("Precio");
+//    modelo.addColumn("Stock");
+//    jTable1.setModel(modelo);
+//}
+    
+    
 
+    private void armarCabecera(){
+        modelo.addColumn("IDALUMNO");
+        modelo.addColumn("DNI");
+        modelo.addColumn("APELLIDO");
+        modelo.addColumn("NOMBRE");
+        jtAlumnos.setModel(modelo);
+        
+    }
+    
+    
+    private void borrarFilas(){
+    int f = modelo.getRowCount()-1;
+    for(;f >= 0; f--){
+        modelo.removeRow(f);
+    }
+}
     private void jcbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMateriaActionPerformed
+        borrarFilas();
+        
         InscripcionData id = new InscripcionData();
-        List<Alumno> alu = new ArrayList<>();
-        int idMateria = jcbMateria.getSelectedIndex();
-        
-        
-        alu = id.obtenerAlumnosXMateria();
+        ArrayList<Alumno> alu = new ArrayList<>();
+        Materia materia = new Materia();
+       materia =  (Materia) jcbMateria.getSelectedItem();
+       int idMat = materia.getIdMateria();
+        alu = id.obtenerAlumnosXMateria(idMat);
         for (Alumno alumno:alu) {
-            System.out.println(alumno);
+            modelo.addRow(new Object[]{alumno.getIdAlumno(),
+                alumno.getDni(),
+                alumno.getApellido(),
+                alumno.getNombre()});
+                
+                 //arreglo casero problema de borrrado de datos antes de iniciar el form
         }
     }//GEN-LAST:event_jcbMateriaActionPerformed
-
-
+//     for(Producto prod:Menu.listaProductos){
+//            if(prod.getRubro() == jcRubro.getSelectedItem()){
+//                modelo.addRow(new Object[]{prod.getCodigo(),prod.getDescripcion(),prod.getPrecio(),prod.getStock()});
+//            }
+//    }                                       
+//    }
+//modelo.addRow(new Object []{
+//                     materia.getIdMateria(),
+//                     materia.getNombre(),
+//                     99});
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> jcbMateria;
+    private javax.swing.JComboBox<Materia> jcbMateria;
+    private javax.swing.JTable jtAlumnos;
     // End of variables declaration//GEN-END:variables
 
     private void cargarComboBox() {
-        MateriaData matD = new MateriaData();
-        int x=0;
-        while (matD.listarMateria().size() > x) {
-            jcbMateria.addItem(matD.listarMateria().get(x).getNombre()+" "+matD.listarMateria().get(x).getAnioMateria()+" año");
-            x = x + 1;
-        }
-        }
+       MateriaData matD = new MateriaData();
+//        int x=0;
+//        while (matD.listarMateria().size() > x) {
+//            jcbMateria.addItem(matD.listarMateria().get(x).getNombre()+" "+matD.listarMateria().get(x).getAnioMateria()+" año");
+//            x = x + 1;
+//        }
+//        }
+    List<Materia> lista = new ArrayList<>();
+    lista = matD.listarMateria();
+    lista.forEach(e->{jcbMateria.addItem(e);});
     }
-
+}
