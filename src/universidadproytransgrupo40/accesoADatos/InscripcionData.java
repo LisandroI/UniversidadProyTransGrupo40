@@ -272,7 +272,38 @@ try{
          
     }
     public List<Alumno> obtenerAlumnosXMateria(int idMAteria){
-        return null;
+        
+        ArrayList<Alumno> alumnos = new ArrayList<>();
+        try {
+            String sql = "SELECT alumno.idAlumno,dni,apellido,nombre FROM alumno join inscripcion on (inscripcion.idAlumno = alumno.idAlumno) WHERE idMateria=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMAteria);
+            ResultSet rs = ps.executeQuery();
+//            System.out.println(rs.next());
+//            Alumno alumno;
+            while (rs.next()) {
+//                alumno = new Alumno(32895332,"calvo","daniel",LocalDate.of(1987,Month.JANUARY,13),true);
+                Alumno alumno = new Alumno();
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+//                alumno.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+//                alumno.setEstado(true);
+                alumnos.add(alumno);
+            }
+            ps.close();
+//            for (Alumno alumno : alumnos) {
+//                System.out.println("Estoy acá"+alumno);
+//            }
+ 
+                
+            
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno " + ex.getMessage());
+        }
+        return alumnos;
     }
     
     
