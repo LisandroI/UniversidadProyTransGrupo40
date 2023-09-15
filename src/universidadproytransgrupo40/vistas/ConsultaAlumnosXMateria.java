@@ -1,7 +1,11 @@
 
 package universidadproytransgrupo40.vistas;
 
+import java.util.ArrayList;
+import java.util.List;
+import universidadproytransgrupo40.accesoADatos.InscripcionData;
 import universidadproytransgrupo40.accesoADatos.MateriaData;
+import universidadproytransgrupo40.entidades.Alumno;
 import universidadproytransgrupo40.entidades.Materia;
 
 /**
@@ -128,7 +132,15 @@ public class ConsultaAlumnosXMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMateriaActionPerformed
+        InscripcionData id = new InscripcionData();
+        List<Alumno> alu = new ArrayList<>();
+        int idMateria = jcbMateria.getSelectedIndex();
         
+        
+        alu = id.obtenerAlumnosXMateria();
+        for (Alumno alumno:alu) {
+            System.out.println(alumno);
+        }
     }//GEN-LAST:event_jcbMateriaActionPerformed
 
 
