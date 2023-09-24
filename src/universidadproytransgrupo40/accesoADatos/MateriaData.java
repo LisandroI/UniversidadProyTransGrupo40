@@ -7,8 +7,6 @@ import universidadproytransgrupo40.entidades.Materia;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -108,9 +106,29 @@ public class MateriaData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar listar las materias."+ ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar listar las materias."+ ex.getMessage());
         }
         return materias;
     }
- 
+    
+    public Materia datosMateria(int idMateria){
+        Materia materia = null;
+        String sql = "SELECT  nombre, año, estado FROM materia WHERE idMateria=1";
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                materia = new Materia();
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnioMateria(rs.getInt("año"));
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Materia " + ex.getMessage());
+        }
+        return materia;
+        
     }
+    
+}

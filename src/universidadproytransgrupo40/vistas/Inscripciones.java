@@ -6,9 +6,6 @@
 package universidadproytransgrupo40.vistas;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadproytransgrupo40.accesoADatos.AlumnoData;
 import universidadproytransgrupo40.accesoADatos.InscripcionData;
-import universidadproytransgrupo40.accesoADatos.MateriaData;
 import universidadproytransgrupo40.entidades.Alumno;
 import universidadproytransgrupo40.entidades.Materia;
 import universidadproytransgrupo40.entidades.Inscripcion;
@@ -29,14 +25,10 @@ public class Inscripciones extends javax.swing.JInternalFrame {
     
     
     private static   AlumnoData aluData = new AlumnoData();
-    private static   MateriaData materiadata= new MateriaData();
     private static   InscripcionData inscripciondata = new InscripcionData();
     
 private DefaultTableModel modelo = new DefaultTableModel();
-private int codigo;
-private String apellido;
-private String nombre;
-Alumno alumnoSeleccionado;
+Alumno alumnoSeleccionado=null;
 Materia materiaSeleccionada;
     /**
      * Creates new form Inscripciones
@@ -245,6 +237,9 @@ Materia materiaSeleccionada;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcbAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnoActionPerformed
+        if(alumnoSeleccionado!=null){
+            borrarFilas();
+        }
         alumnoSeleccionado = (Alumno) jcbAlumno.getSelectedItem();
     }//GEN-LAST:event_jcbAlumnoActionPerformed
 
@@ -258,9 +253,9 @@ Materia materiaSeleccionada;
         
         borrarFilas();
         
-        JOptionPane.showMessageDialog(null, "aca anda");
+       
             List<Materia> materias = inscripciondata.obtenerMateriasCursadas(alumnoSeleccionado.getIdAlumno());
-        JOptionPane.showMessageDialog(null, "aca volvio");
+        
            
      materias.forEach(System.out::println);
         for (Materia materia : materias) {
@@ -284,13 +279,12 @@ try {
              jbAnularInsc.setEnabled(false);
              jbInscribir.setEnabled(true);
              borrarFilas();
-             JOptionPane.showMessageDialog(null, "aca anda");
+          
              List<Materia> materias;
              
                  materias = inscripciondata.obtenerMateriasNOCursadas(alumnoSeleccionado.getIdAlumno());
             
-             JOptionPane.showMessageDialog(null, "aca volvio");
-             materias.forEach(System.out::println);
+           
              for (Materia materia : materias) {
                  modelo.addRow(new Object []{
                      materia.getIdMateria(),
@@ -355,13 +349,10 @@ try {
         
         
         try {
-            JOptionPane.showMessageDialog(null, alumnoSeleccionado.getIdAlumno());
             
             
             int alumnoBja=(int) alumnoSeleccionado.getIdAlumno();
             int materiaBja=(int) materiaSeleccionada.getIdMateria();
-           JOptionPane.showMessageDialog(null, alumnoBja);
-           JOptionPane.showMessageDialog(null, materiaBja);
             inscripciondata.borrarInscripcionMateriaAlumno(alumnoBja,materiaBja);
                         int filaSeleccionada = jtMaterias.getSelectedRow();
             if(filaSeleccionada!=-1){

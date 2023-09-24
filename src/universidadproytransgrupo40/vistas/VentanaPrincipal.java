@@ -39,7 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jmconsulta = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jmSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestion de la ULP");
@@ -120,9 +120,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Salir");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
 
-        jMenuItem6.setText("Salir");
-        jMenu6.add(jMenuItem6);
+        jmSalir.setText("Salir");
+        jmSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmSalirActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jmSalir);
 
         jMenuBar1.add(jMenu6);
 
@@ -191,6 +201,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         escritorio.moveToFront(gdm);
     }//GEN-LAST:event_jmMateriaActionPerformed
 
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+
+    }//GEN-LAST:event_jMenu6ActionPerformed
+
+    private void jmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSalirActionPerformed
+               //System. exit(0);
+       this.dispose();
+    }//GEN-LAST:event_jmSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,11 +253,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jmAlumnos;
     private javax.swing.JMenuItem jmGestionInsc;
     private javax.swing.JMenuItem jmMateria;
     private javax.swing.JMenuItem jmNotas;
+    private javax.swing.JMenuItem jmSalir;
     private javax.swing.JMenuItem jmconsulta;
     // End of variables declaration//GEN-END:variables
 }

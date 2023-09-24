@@ -46,6 +46,9 @@ private DefaultTableModel modelo = new DefaultTableModel(){
         jcbMateria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtAlumnos = new javax.swing.JTable();
+        jbSalir = new javax.swing.JButton();
+
+        setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
 
@@ -88,12 +91,20 @@ private DefaultTableModel modelo = new DefaultTableModel(){
             jtAlumnos.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbSalir)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -117,7 +128,9 @@ private DefaultTableModel modelo = new DefaultTableModel(){
                     .addComponent(jcbMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jbSalir)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,6 +196,10 @@ private DefaultTableModel modelo = new DefaultTableModel(){
                  //arreglo casero problema de borrrado de datos antes de iniciar el form
         }
     }//GEN-LAST:event_jcbMateriaActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
 //     for(Producto prod:Menu.listaProductos){
 //            if(prod.getRubro() == jcRubro.getSelectedItem()){
 //                modelo.addRow(new Object[]{prod.getCodigo(),prod.getDescripcion(),prod.getPrecio(),prod.getStock()});
@@ -198,6 +215,7 @@ private DefaultTableModel modelo = new DefaultTableModel(){
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbSalir;
     private javax.swing.JComboBox<Materia> jcbMateria;
     private javax.swing.JTable jtAlumnos;
     // End of variables declaration//GEN-END:variables
@@ -213,5 +231,6 @@ private DefaultTableModel modelo = new DefaultTableModel(){
     List<Materia> lista = new ArrayList<>();
     lista = matD.listarMateria();
     lista.forEach(e->{jcbMateria.addItem(e);});
+    lista.forEach(System.out::println);
     }
 }

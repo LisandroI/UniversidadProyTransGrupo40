@@ -2,17 +2,11 @@
 package universidadproytransgrupo40.accesoADatos;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 import javax.swing.JOptionPane;
 import universidadproytransgrupo40.entidades.Inscripcion;
 import universidadproytransgrupo40.entidades.Materia;
@@ -25,12 +19,9 @@ public class InscripcionData {
     
     
     private Connection con;
-    private MateriaData matData;
-    private AlumnoData aluData;
 
     public InscripcionData() {
         con=(Connection) Conexion.getConexion();
-        JOptionPane.showMessageDialog(null,"conectando inscripcioneas");
     }
     
     
@@ -103,7 +94,6 @@ try{
             materia.setActivo(true);
             materias.add(materia);
         }
-        JOptionPane.showMessageDialog(null, "paso hasta aca tod bien");
                 
         
         return materias;
@@ -117,110 +107,36 @@ try{
        
         
         List<Materia> materias = new ArrayList<Materia>();
-      LinkedList<Integer> inscriptas =new LinkedList<>();
-   TreeSet<Integer> norepetidos = new TreeSet();
-         
-       
-        System.out.println("Imprimo deberia figurar vacio el ");
-        inscriptas.forEach(System.out::println);
-        System.out.println("estoy en obtenerMateriasNOCursadas");
-       
         
-        String sql_inscriptas = "select * from inscripcion join materia on inscripcion.idmateria = materia.idmateria where inscripcion.idalumno=?;";
-        String sql_existentes = "select * from materia;";
-        PreparedStatement sentencia = con.prepareStatement(sql_inscriptas);
+        
+        
+        
+        
+        
+        
+        
+       
+        String sql_prueba = "SELECT m.idMateria,m.nombre,m.año\n" +
+"from materia m\n" +
+"where m.idMateria not IN (SELECT idMateria \n" +
+"FROM inscripcion WHERE idAlumno=?);";
+        PreparedStatement sentencia = con.prepareStatement(sql_prueba);
         sentencia.setInt(1, id);
         ResultSet resultado = sentencia.executeQuery();
         Materia materia;
         while(resultado.next()){
-           inscriptas.add(resultado.getInt("idMateria"));
-        }
-        System.out.println("Imprimo las inscriptas que figura");
-          Collections.sort(inscriptas);
-       inscriptas.forEach(System.out::println);
-        
-        sentencia.close();
-        resultado.close();
-        sentencia = con.prepareStatement(sql_existentes);
-        //sentencia.setInt(1, id);
-        resultado = sentencia.executeQuery();
-//       System.out.println("Imprimo las materias existentes que figuran");
-//        while(resultado.next()){
-//            System.out.println("codigo aque exite" + resultado.getInt("idMateria"));
-//        }
-       
-        int longitud = inscriptas.size();
-        System.out.println("la cantidad de elementos del vector es " + longitud);
-            while(resultado.next()){
-                
-                if(inscriptas.contains(resultado.getInt("idMateria"))){
-                    System.out.println("el numero esta");
-                
-            }else{
-                    System.out.println("no esta");
                     materia = new Materia();
                     materia.setIdMateria(resultado.getInt("idMateria"));
                     materia.setNombre(resultado.getString("nombre"));
                     materia.setAnioMateria(resultado.getInt("año"));
                     materia.setActivo(true);
                     materias.add(materia);
-                }
-                //if (resultado.getInt("idMateria"))
-                
-                 for (Integer inscripta : inscriptas) {
-                
-                     
-                     
-                     
-                     
-                     System.out.println("la materia que trae bd es  " + resultado.getInt("idMateria"));
-                     System.out.println("la materia que compara inscrita es " + inscripta);
-                     
-//                if(inscripta==resultado.getInt("idMateria")){
-//                    System.out.println("es igual");
-//               
-//                    
-//            }else{
-//                    System.out.println("es diferente");
-//                    norepetidos.add(resultado.getInt("idMateria"));
-//                    
-////                    materia = new Materia();
-////                    materia.setIdMateria(resultado.getInt("idMateria"));
-////                    materia.setNombre(resultado.getString("nombre"));
-////                    materia.setAnioMateria(resultado.getInt("año"));
-////                    materia.setActivo(true);
-////                    materias.add(materia);
-//                    
-//                }
-                
-            
-            }
         }
-            System.out.println("imprimo las materias no repetidas a ver si sale"
-                    + "         "
-                    + "       el array de materias" + "--------------------------------------------");
-            norepetidos.forEach(System.out::println);
-            JOptionPane.showMessageDialog(null, "paso hasta aca tod bien");
             return materias;
     }
     
-    /*
-    else{
-                    System.out.println("es diferente");
-                    materia = new Materia();
-                    materia.setIdMateria(resultado.getInt("idMateria"));
-                    materia.setNombre(resultado.getString("nombre"));
-                    materia.setAnioMateria(resultado.getInt("año"));
-                    materia.setActivo(true);
-                    materias.add(materia);
-                    
-                }
-    */
     
     public void borrarInscripcionMateriaAlumno(int idAlumno,int idMateria) throws SQLException{
-        System.out.println("aca estoy");
-        System.out.println(idAlumno);
-        System.out.println(idMateria);
         
         
         

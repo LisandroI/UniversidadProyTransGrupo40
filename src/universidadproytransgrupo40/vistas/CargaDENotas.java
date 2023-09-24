@@ -5,23 +5,14 @@
  */
 package universidadproytransgrupo40.vistas;
 
-import com.sun.javafx.scene.control.skin.IntegerFieldSkin;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadproytransgrupo40.accesoADatos.AlumnoData;
 import universidadproytransgrupo40.accesoADatos.InscripcionData;
-import universidadproytransgrupo40.accesoADatos.MateriaData;
 import universidadproytransgrupo40.entidades.Alumno;
 import universidadproytransgrupo40.entidades.Materia;
-import universidadproytransgrupo40.entidades.Inscripcion;
 /**
  *
  * @author eduardo
@@ -31,7 +22,6 @@ public class CargaDENotas extends javax.swing.JInternalFrame {
     
     
     private static   AlumnoData aluData = new AlumnoData();
-    private static   MateriaData materiadata= new MateriaData();
     private static   InscripcionData inscripciondata = new InscripcionData();
     
 private DefaultTableModel modelo = new DefaultTableModel(){
@@ -45,14 +35,12 @@ private DefaultTableModel modelo = new DefaultTableModel(){
     }
 };
 private double notaultima;
-private int codigo;
-private String apellido;
-private String nombre;
 Alumno alumnoSeleccionado;
 Materia materiaSeleccionada;
 private int idMateria;
         
-private double nota;
+private double nota=99; // se elije numero arbitrario para que se entienda que se debe cargar la nota
+                        // solo carga la nota no interesa que nota tiene en la bd, no consulta la bd la actualiza
     /**
      * Creates new form Inscripciones
      */
@@ -108,10 +96,7 @@ private double nota;
 
         jtMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -163,14 +148,13 @@ private double nota;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 14, Short.MAX_VALUE))
+                        .addGap(0, 4, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator1)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -181,7 +165,7 @@ private double nota;
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcbAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(jcbAlumno)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(60, 60, 60)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,22 +202,33 @@ private double nota;
              borrarFilas(); 
         alumnoSeleccionado = (Alumno) jcbAlumno.getSelectedItem();
            
-             JOptionPane.showMessageDialog(null, "aca anda");
              List<Materia> materias;
              
        
             materias = inscripciondata.obtenerMateriasCursadas(alumnoSeleccionado.getIdAlumno());
         
             
-           
              for (Materia materia : materias) {
                  modelo.addRow(new Object []{
                      materia.getIdMateria(),
                      materia.getNombre(),
-                     99}); //habria que crear un metodo que me traiga la nota del alumno de esa materia
+                     /*
+                    select inscripcion.idMateria,materia.nombre,inscripcion.nota
+                    from inscripcion
+                    join materia
+                    on(materia.idMateria=inscripcion.idMateria)
+                    join alumno
+                    on(alumno.idAlumno=inscripcion.idAlumno)
+                    WHERE alumno.idAlumno=1;
+                     */
+                     
+                     
+                     nota}); //habria que crear un metodo que me traiga la nota del alumno de esa materia
+                 
              }
-             } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "erro que salio: " + ex.getMessage());
+            
+             } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error que sale " + ex.getMessage());
         }
              
     }//GEN-LAST:event_jcbAlumnoActionPerformed
@@ -295,8 +290,9 @@ private double nota;
 
     
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-       
+         
           this.dispose();    
+          
         
         
         
@@ -362,10 +358,16 @@ private void cargarComboBox(){
 
     private void borrarFilas(){
         
-        int fila=jtMaterias.getRowCount()-1;
-        for (; fila>=0; fila--) {
-            modelo.removeRow(fila);
+        while (jtMaterias.getRowCount()>0){
+            modelo.removeRow(0);
         }
+                
+        
+        
+        //int fila=jtMaterias.getRowCount()-1;
+        //for (; fila>=0; fila--) {
+         //   modelo.removeRow(fila);
+        //}
         
         
         
