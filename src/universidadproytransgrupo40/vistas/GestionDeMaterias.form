@@ -131,10 +131,14 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="jtAnio">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtAnioKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbEliminar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbEliminarActionPerformed"/>
@@ -143,6 +147,7 @@
         <Component class="javax.swing.JButton" name="jbGuardar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbGuardarActionPerformed"/>
