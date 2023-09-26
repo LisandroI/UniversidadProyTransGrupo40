@@ -264,7 +264,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jtAnioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtAnioKeyPressed
-        if (jtCodigo.getText()=="" && jtNombre.getText().length()>=3) {
+        if (jtCodigo.getText().length()<1 && jtNombre.getText().length()>=3) {
             jbGuardar.setEnabled(true);
         }
     }//GEN-LAST:event_jtAnioKeyPressed
