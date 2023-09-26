@@ -7,10 +7,12 @@ package universidadproytransgrupo40.vistas;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import universidadproytransgrupo40.accesoADatos.AlumnoData;
 import universidadproytransgrupo40.entidades.Alumno;
+
 
 
 /**
@@ -237,9 +239,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
             String apellido = jtApellido.getText();
             String nombre = jtNombre.getText();
             boolean estado = jrbEstado.isSelected();
-            java.util.Date d = jdFechaNac.getDate();
-            java.sql.Date fec = new java.sql.Date(d.getTime());
-            LocalDate fecha = fec.toLocalDate();
+            LocalDate fecha = jdFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Alumno alum1 = new Alumno(documento,apellido, nombre, fecha, estado);
             AlumnoData alu = new AlumnoData();
             alu.guardarAlumno(alum1);
