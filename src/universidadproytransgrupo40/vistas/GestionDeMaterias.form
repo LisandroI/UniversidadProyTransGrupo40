@@ -237,8 +237,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtCodigo">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtCodigoKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtNombre">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtNombreKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

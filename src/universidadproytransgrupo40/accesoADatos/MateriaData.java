@@ -61,7 +61,7 @@ public class MateriaData {
             ps.setInt(3, materia.getIdMateria());
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "La materia fue actualizada exitosamente. "+exito);
+                JOptionPane.showMessageDialog(null, "La materia fue actualizada exitosamente.");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "La materia NO fue actualizada."+ex);

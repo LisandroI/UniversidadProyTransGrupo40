@@ -117,6 +117,18 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
             }
         });
 
+        jtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtCodigoKeyPressed(evt);
+            }
+        });
+
+        jtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtNombreKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -209,14 +221,15 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         try {
         MateriaData matD = new MateriaData();
-        if (jtCodigo.getText().isEmpty()) {
+        if (jtCodigo.getText().length()==0) {
             Materia mat1 = new Materia(jtNombre.getText(), Integer.parseInt(jtAnio.getText()), true);
             matD.guardarMateria(mat1);
         } else {
-            Materia mat2 = new Materia(Integer.parseInt(jtCodigo.getText()), jtNombre.getText(), Integer.parseInt(jtAnio.getText()), true);
-            matD.modificarMateria(mat2);
+              JOptionPane.showMessageDialog(null, "Error: el campo 'Código' debe estar vacío para guardar una materia.");
+//            Materia mat2 = new Materia(Integer.parseInt(jtCodigo.getText()), jtNombre.getText(), Integer.parseInt(jtAnio.getText()), true);
+//            matD.modificarMateria(mat2);
         }
-        } catch (NumberFormatException ex) {
+        } catch (NullPointerException | NumberFormatException ex) {
         JOptionPane.showMessageDialog(null, "Uno o más campos no están completos o el texto ingresado es incorrecto.");
         }
         
@@ -249,7 +262,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-        try {
+        try { 
         MateriaData matD = new MateriaData();
         Materia materia = matD.buscarMateria(Integer.parseInt(jtCodigo.getText()));
         jtNombre.setText(materia.getNombre());
@@ -258,16 +271,26 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         jtCodigo.setEditable(false);
         jtNombre.setEditable(false);
         jtAnio.setEditable(false);
-        } catch (NumberFormatException ex) {
+        } catch (NullPointerException | NumberFormatException ex) {
         JOptionPane.showMessageDialog(null, "El código ingresado no corresponde a una materia");
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jtAnioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtAnioKeyPressed
-        if (jtCodigo.getText().length()<1 && jtNombre.getText().length()>=3) {
+        
             jbGuardar.setEnabled(true);
-        }
+     
     }//GEN-LAST:event_jtAnioKeyPressed
+
+    private void jtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtNombreKeyPressed
+        // TODO add your handling code here:
+        jbGuardar.setEnabled(true);
+    }//GEN-LAST:event_jtNombreKeyPressed
+
+    private void jtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCodigoKeyPressed
+        // TODO add your handling code here:
+        jbGuardar.setEnabled(true);
+    }//GEN-LAST:event_jtCodigoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
