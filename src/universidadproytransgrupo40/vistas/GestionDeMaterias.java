@@ -251,7 +251,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         try {
         MateriaData matD = new MateriaData();
-        Materia materia = matD.datosMateria(Integer.parseInt(jtCodigo.getText()));
+        Materia materia = matD.buscarMateria(Integer.parseInt(jtCodigo.getText()));
         jtNombre.setText(materia.getNombre());
         jtAnio.setText(String.valueOf(materia.getAnioMateria()));
         jbEliminar.setEnabled(true);
