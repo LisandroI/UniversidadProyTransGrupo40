@@ -240,9 +240,14 @@ public class Alumnos extends javax.swing.JInternalFrame {
             String nombre = jtNombre.getText();
             boolean estado = jrbEstado.isSelected();
             LocalDate fecha = jdFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (apellido.length()>0 && nombre.length()>0){
             Alumno alum1 = new Alumno(documento,apellido, nombre, fecha, estado);
             AlumnoData alu = new AlumnoData();
             alu.guardarAlumno(alum1);
+            } else{
+            JOptionPane.showMessageDialog(this, "Error no puede haber campos vacios");
+            }
+                
         } catch (NumberFormatException e){
             if (jtDocumento.getText().equalsIgnoreCase("")){
                 JOptionPane.showMessageDialog(this, "Error el campo documento se encuentra vacio");
@@ -260,17 +265,23 @@ public class Alumnos extends javax.swing.JInternalFrame {
        try{
        AlumnoData b = new AlumnoData();
        Alumno alumno = b.buscarAlumnoPorDni(Integer.parseInt(jtDocumento.getText()));
+       if (alumno != null){
        jtApellido.setText(alumno.getApellido());
        jtNombre.setText(alumno.getNombre());
        Date date = java.sql.Date.valueOf(alumno.getFechaNac());
        jdFechaNac.setDate(date);
        id = alumno.getIdAlumno();
        jbEliminar.setEnabled(true);
-       } catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Error el campo documento solo acepta numeros");
-       }catch (NullPointerException e){
-           JOptionPane.showMessageDialog(this, "Error el campo documento esta vacio");
        }
+       } catch (NumberFormatException e){
+          if (jtDocumento.getText().equalsIgnoreCase("")){
+                JOptionPane.showMessageDialog(this, "Error el campo documento se encuentra vacio");
+            }else
+            JOptionPane.showMessageDialog(this, "Error el campo documento solo acepta numeros");
+          } catch (NullPointerException e){
+            JOptionPane.showMessageDialog(this, "Error no puede haber campos vacios");
+        }
+       
     }//GEN-LAST:event_jbbuscarActionPerformed
 
 
