@@ -230,6 +230,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
         
         AlumnoData alu = new AlumnoData();
         alu.eliminarAlumno(id);
+        JOptionPane.showMessageDialog(this, "Alumno eliminado con exito");
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
